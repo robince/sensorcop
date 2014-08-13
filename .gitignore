@@ -1,0 +1,9 @@
+*.swp
+*~
+*.DS_Store
+*.mat
+*.mex*
+*.png
+*.eps
+*.pdf
+._*
