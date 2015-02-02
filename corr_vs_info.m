@@ -9,7 +9,16 @@ for i=1:NC
     I(i) = thsI;
 end
 
-plot(C,I)
-xlabel('Correlation')
-ylabel('Information (bits)')
-title('Two Gaussian Variables')
+
+%%
+figure
+plot(C,I,'k','LineWidth',2)
+xlabel('Correlation','FontSize',16)
+ylabel('Information (bits)','FontSize',16)
+title('Two Gaussian Variables','FontSize',16)
+xlim([-1.1 1.1])
+
+vline(-1,'k:')
+vline(1,'k:')
+axis square
+set(gca,'FontSize',16)
