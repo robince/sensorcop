@@ -1,3 +1,4 @@
+
 % load data
 
 dat = load(fullfile(data_dir,'forRobin.mat'));
@@ -29,13 +30,17 @@ hmeg = hilbert(fltmeg);
 optlag = 34; % from time domain cross-info
 hspc = hspc(1:(end-optlag));
 fltspc = fltspc(1:(end-optlag));
+dfltspc = gradient(fltspc);
 
 hmeg = hmeg((optlag+1):end);
 fltmeg = fltmeg((optlag+1):end);
+dfltmeg = gradient(fltmeg); 
 
 %%
 cfltspc = copnorm(fltspc);
 cfltmeg = copnorm(fltmeg);
+cdfltspc = copnorm(dfltspc);
+cdfltmeg = copnorm(dfltmeg);
 
 % Iraw = info_gg(cfltspc, cfltmeg, true, false, false);
 
@@ -106,5 +111,10 @@ Iphsh = info_gg(cphsspc, chmeg, true, false, false)
 % %%
 % max(Iboot)
 
-
-
+%%
+ccfltspc = normcdf(cfltspc);
+ccfltmeg = normcdf(cfltmeg);
+Nplt = 50000;
+pltidx = randperm(length(cfltspc),Nplt);
+figure
+scatter(ccfltspc(pltidx),ccfltmeg(pltidx),6,'k', 'filled')

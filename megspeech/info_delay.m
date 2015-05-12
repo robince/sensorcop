@@ -38,6 +38,10 @@ fltmeg = fltdat( (Npad+1):(end-Npad) );
 % plot(lags./Fs, xc);
 
 Nlags = length(lags);
+% dfltspc = gradient(fltspc);
+% dfltmeg = gradient(fltmeg);
+% qspc = copnorm(dfltspc);
+% qmeg = copnorm(dfltmeg);
 
 qspc = copnorm(fltspc);
 qmeg = copnorm(fltmeg);
