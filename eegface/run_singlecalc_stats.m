@@ -13,15 +13,15 @@ rspdat = permute(dat.csddat, [3 2 1]);
 %%
 % max effect
 ci = 41; % B9
-% ti = 319;
-ti = 294;
+ti = 319;
+% ti = 294;
 
 rsp = rspdat(:,ti,ci);
 rsp0 = rsp(stim==0);
 rsp1 = rsp(stim==1);
 trlnums = [8 16 32 64 128 256 512 1024];
 Ntrlnum = length(trlnums);
-Nperm = 100;
+Nperm = 500;
 
 % select trials
 Ntrlrep = 100;
@@ -50,9 +50,9 @@ fname = sprintf('%s_csd_%d_%d_trialselect.mat',subid,ci,ti);
 save(fullfile(data_dir,fname), 'trldat','trlstm','trlperm')
 
 %%
-ci = 41; % B9
-% ti = 319;
-ti = 294;
+% ci = 41; % B9
+% % ti = 319;
+% ti = 294;
 fname = sprintf('%s_csd_%d_%d_trialselect.mat',subid,ci,ti);
 load(fullfile(data_dir,fname), 'trldat','trlstm','trlperm')
 
@@ -145,7 +145,9 @@ for i=1:Ntrlnum
 end
 
 %% dat for graph
-stats = {'Ic' 'Ig' 'Ib2' 'Ib4' 'Ib8' 't' 'ks'};
+% stats = {'Ic' 'Ig' 'Ib2' 'Ib4' 'Ib8' 't' 'ks'};
+
+stats = {'Ic'  'Ib4'  't' 'ks'};
 pltavg = [];
 pltstd = [];
 
@@ -165,12 +167,15 @@ figure
 for sti=1:length(stats)
     stat = stats{sti};
     loglog(trlnums, pltavg.(stat))
+%     semilogx(trlnums, pltavg.(stat))
     hold all
 end
 legend(stats)
+set(gca,'TickDir','out')
 
 %%
 stats = {'Ic' 'Ig' 'Ib2' 'Ib4' 'Ib8'};
+stats = {'Ic'  'Ib2' 'Ib4' 'Ib8'  };
 pltavg = [];
 pltstd = [];
 

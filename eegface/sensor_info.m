@@ -7,8 +7,8 @@ dat = load(fullfile(data_dir, fname));
 %%
 time = dat.time;
 stim = dat.stim;
-% rspdat = permute(dat.eegdat, [3 2 1]);
-rspdat = permute(dat.csddat, [3 2 1]);
+rspdat = permute(dat.eegdat, [3 2 1]);
+% rspdat = permute(dat.csddat, [3 2 1]);
 [Ntrl Nt Nchan] = size(rspdat);
 
 qdat = copnorm(rspdat);
