@@ -70,7 +70,7 @@ subroutine dorocarea(p, label, Ntrl, Az)
 
     ! argsort data
     index = (/ (i, i=1,Ntrl) /)
-    cp = p
+    cp = -p
     call quicksort_index(cp,index)
 
     Az = 0.0
