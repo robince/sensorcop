@@ -86,3 +86,13 @@ MEXARGS{end+1} = ['lib_array.' OBJEXT];
 MEXARGS{end+1} = '-lmwblas';
 MEXARGS{end+1} = '-lmwlapack';
 mex(MEXARGS{:})
+
+%%
+MEXARGS = ARGS;
+MEXARGS{end+1} = 'kstest_slice_omp.f';
+MEXARGS{end+1} = fullfile(MATLABAPI_DIR,['MatlabAPImx.' OBJEXT]);
+MEXARGS{end+1} = fullfile(MATLABAPI_DIR,['MatlabAPImex.' OBJEXT]);
+MEXARGS{end+1} = ['lib_array.' OBJEXT];
+MEXARGS{end+1} = '-lmwblas';
+MEXARGS{end+1} = '-lmwlapack';
+mex(MEXARGS{:})
