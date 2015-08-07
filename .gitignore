@@ -7,3 +7,10 @@
 *.eps
 *.pdf
 ._*
+*.mod
+*.o
+*.obj
+*.asv
+*genmod.f90
+*.mod
+.*.F90T
