@@ -14,3 +14,4 @@
 *genmod.f90
 *.mod
 .*.F90T
+*.i
