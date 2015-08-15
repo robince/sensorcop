@@ -1,8 +1,16 @@
 % compare robustness of t-test vs Icop
-data_dir = '~/Documents/gladata/sensorcop';
-addpath('~/Documents/glacode/para_info/')
-addpath('~/Documents/glacode/para_info/mex')
-addpath('~/Documents/glacode/info')
+
+%% MAC
+% data_dir = '~/Documents/gladata/sensorcop';
+% addpath('~/Documents/glacode/para_info/')
+% addpath('~/Documents/glacode/para_info/mex')
+% addpath('~/Documents/glacode/info')
+%% WS
+% data_dir = '~/Documents/gladata/sensorcop';
+% addpath('~/Documents/glacode/para_info/')
+% addpath('~/Documents/glacode/para_info/mex')
+% addpath('~/Documents/glacode/info')
+
 %%
 subid = 'HKI1';
 fname = sprintf('%s_ridat.mat',subid);
@@ -21,15 +29,10 @@ rspdat = rspdat(:,tidx,:);
 
 %%
 load(fullfile(data_dir,'eeg_face_ks_ground'),'gt')
-chi = 41;
-ti = 67;
 
 thsNtrl = 100;
 corrupt_prct = [0 5 10 15 20 25 30 35 40 45 50];
 Ncorr = length(corrupt_prct);
-
-Nrep = 100;
-Ntrl = 100;
 
 % calculate value with X% of outliers added (from random gaussian
 % with 5*SD of data.
@@ -40,8 +43,8 @@ corrres = cell(1,Ncorr);
 Nrep = 50;
 Nperm = 200;
 
-% Nthread = 32;
-Nthread = 8;
+Nthread = 32;
+% Nthread = 8;
 % stats = {'Ib2' 'Ib4' 'Ib8' 'Icop' 't' 'ks'};
 stats = {'Ib2' 'Ib4' 'Ib8' 'Icop' 't'};
 
@@ -65,7 +68,7 @@ for si=1:Ncorr
         thsstim = stim(idx);
         qstm = int16(thsstim);
         
-        corridx = randperm(thsNtrl, round(thsNtrl*corrupt_prct(sampi)/100));
+        corridx = randperm(thsNtrl, round(thsNtrl*corrupt_prct(si)/100));
         thseeg(corridx,:,:) = 5.*bsxfun(@times, randn(length(corridx),size(thseeg,2),size(thseeg,3)), std(thseeg,[],1));
 
         % true values
@@ -122,4 +125,8 @@ for si=1:Ncorr
     end
     toc
 end
-        
+
+%%
+
+save cm_1d_robust1.mat cm stats corrupt_prct
+
