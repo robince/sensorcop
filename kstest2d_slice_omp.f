@@ -81,17 +81,17 @@ subroutine calc_kstest_slice_omp(X, xd, Nx, Y, Ntrl, Nthread, KS)
         N1 = N1 + 1
       endif
     end do
-    N0inv = 1.0_8 / real(N0,8)
-    N1inv = 1.0_8 / real(N1,8)
+    N0inv = 1.0_8 / (real(N0,8)*real(N0,8))
+    N1inv = 1.0_8 / (real(N1,8)*real(N1,8))
 
  
     ! loop over X variables
     ! NB: OMP doesn't work with allocatable arrays
     ! NB: default(private) shared(...list...) didn't work
-    !omp parallel do &
-    !omp num_threads(Nthread) &
-    !omp default(shared) &
-    !omp private(xi,idx,ii,i,cX,ti,cdf0,cdf1,ti1,ti2,Y1,Y2,ksdiff)
+    !$omp parallel do &
+    !$omp num_threads(Nthread) &
+    !$omp default(shared) &
+    !$omp private(xi,idx1,idx2,i,cX1,cX2,ti,cdf0,cdf1,ti1,ti2,Y1,Y2,ksdiff)
     do xi=1,Nx
       ! argsort each dimension
       idx1 = (/ (i, i=1,Ntrl) /)
@@ -259,6 +259,6 @@ subroutine calc_kstest_slice_omp(X, xd, Nx, Y, Ntrl, Nthread, KS)
 
       KS(xi) = maxval(ksdiff)
     end do
-    !omp end parallel do
+    !$omp end parallel do
 
 end subroutine
