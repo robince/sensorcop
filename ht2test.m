@@ -13,8 +13,8 @@ Cy = yn'*yn / (Ny-1);
 
 
 % pool covariance estimates (homogenous)
-Cp = ((Nx-1)*Cx + (Ny-1)*Cy) / (Nx + Ny - 2);
+% Cp = ((Nx-1)*Cx + (Ny-1)*Cy) / (Nx + Ny - 2);
 % separate cov (heterogenous)
-% Cp = (Cx./Nx) + (Cy./Ny);
+Cp = (Cx./Nx) + (Cy./Ny);
 dm = mx-my;
 t2 = dm * inv(Cp) * dm';
