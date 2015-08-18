@@ -68,7 +68,7 @@ Nperm = 200;
 Nrep = 50;
 
 Nthread = 32;
-stats = {'Ib2' 'Ib4' 'Ib8' 'Icop' 't2'};
+stats = {'Ib2' 'Ib4' 'Ib8' 'Icop' 'ht2'};
 % stats = {'Ib8'}
 Nstat = length(stats);
 % cm = [];
@@ -113,14 +113,14 @@ for si=1:Nsamps
         qrsp8 = int16(reshape(qrsp8, [thsNtrl Nt*Nchan]));
         fres.Ib8 = reshape(info.calc_info_slice_omp_integer_c_int16_t(qrsp8, 64, qstm, 2, thsNtrl, Nthread), [Nt Nchan]);
         
-        crsp = copnorm_slice_omp_c_double(thseeg(:,:),Nthread);
-        fres.Icop = reshape(info_c1d_slice_nobc_omp(crsp, qstm+1, 2, thsNtrl, Nthread),[Nt Nchan]);
+        crsp = reshape(copnorm_slice_omp_c_double(thseeg(:,:),Nthread),[thsNtrl 2 Nt*Nchan]);
+        crsp = permute(crsp,[2 1 3]);
+        fres.Icop = reshape(info_cd_slice_nobc_omp(crsp, 2, qstm+1, 2, thsNtrl, Nthread),[Nt Nchan]);
         
-        fres.t = abs(reshape(fastt2(thseeg, thsstim),[Nt Nchan]));
+        fres.ht2 = abs(reshape(fastht22(thseeg, thsstim),[Nt Nchan]));
         
-        fres.ks = reshape(kstest_slice_omp(thseeg(:,:), qstm, thsNtrl, Nthread), [Nt Nchan]);
+%         fres.ks = reshape(kstest_slice_omp(thseeg(:,:), qstm, thsNtrl, Nthread), [Nt Nchan]);
 
-        
         % permutations
         Ib2perm = zeros(Nt,Nchan,Nperm);
         Ib4perm = zeros(Nt,Nchan,Nperm);
@@ -131,11 +131,11 @@ for si=1:Nsamps
         for pi=1:Nperm
             pstim = thsstim(randperm(thsNtrl));
             qstm = int16(pstim);
-%             fres.Ib2perm(:,:,pi) = reshape(info.calc_info_slice_omp_integer_c_int16_t(qrsp2, 2, qstm, 2, thsNtrl, Nthread), [Nt Nchan]);
-%             fres.Ib4perm(:,:,pi) = reshape(info.calc_info_slice_omp_integer_c_int16_t(qrsp4, 4, qstm, 2, thsNtrl, Nthread), [Nt Nchan]);
-            fres.Ib8perm(:,:,pi) = reshape(info.calc_info_slice_omp_integer_c_int16_t(qrsp8, 8, qstm, 2, thsNtrl, Nthread), [Nt Nchan]);
-%             fres.Icopperm(:,:,pi) = reshape(info_c1d_slice_nobc_omp(crsp, qstm+1, 2, thsNtrl, Nthread),[Nt Nchan]);
-%             fres.tperm(:,:,pi) = abs(reshape(fastt2(thseeg, pstim),[Nt Nchan]));
+            fres.Ib2perm(:,:,pi) = reshape(info.calc_info_slice_omp_integer_c_int16_t(qrsp2, 4, qstm, 2, thsNtrl, Nthread), [Nt Nchan]);
+            fres.Ib4perm(:,:,pi) = reshape(info.calc_info_slice_omp_integer_c_int16_t(qrsp4, 16, qstm, 2, thsNtrl, Nthread), [Nt Nchan]);
+            fres.Ib8perm(:,:,pi) = reshape(info.calc_info_slice_omp_integer_c_int16_t(qrsp8, 64, qstm, 2, thsNtrl, Nthread), [Nt Nchan]);
+            fres.Icopperm(:,:,pi) = reshape(info_cd_slice_nobc_omp(crsp, 2, qstm+1, 2, thsNtrl, Nthread),[Nt Nchan]);
+            fres.ht2perm(:,:,pi) = abs(reshape(fastht22(thseeg, pstim),[Nt Nchan]));
 %             fres.ksperm(:,:,pi) = reshape(kstest_slice_omp(thseeg(:,:), qstm, thsNtrl, Nthread), [Nt Nchan]);
         end
 
