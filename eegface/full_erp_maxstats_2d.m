@@ -26,7 +26,7 @@ rspdat = cat(2, rspdat, drsp);
 %% groundtruth - KS test
 tic
 rsp = rspdat(:,:,:);
-Nthread = 16;
+Nthread = 32;
 ks = kstest2d_slice_omp(rsp,int16(stim),Ntrl,Nthread);
 ks = reshape(ks,[Nt Nchan]);
 % ks = zeros([Nt Nchan]);
@@ -47,7 +47,7 @@ for pi=1:Nperm
         disp(sprintf('%d... ',pi))
     end
     pstim = stim(randperm(Ntrl));
-    thsks = kstest2d_slice_omp(rsp,int16(stim),Ntrl,Nthread);
+    thsks = kstest2d_slice_omp(rsp,int16(pstim),Ntrl,Nthread);
     thsks = reshape(thsks,[Nt Nchan]);
     ksperm(:,:,pi) = thsks;
 end
