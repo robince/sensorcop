@@ -1,10 +1,4 @@
 % compare bias between different info methods
-
-data_dir = '~/Documents/gladata/sensorcop';
-addpath('~/Documents/glacode/para_info/')
-addpath('~/Documents/glacode/para_info/mex')
-addpath('~/Documents/glacode/info')
-%%
 subid = 'HKI1';
 fname = sprintf('%s_ridat.mat',subid);
 dat = load(fullfile(data_dir, fname));
