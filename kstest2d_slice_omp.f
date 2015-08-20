@@ -69,7 +69,8 @@ subroutine calc_kstest_slice_omp(X, xd, Nx, Y, Ntrl, Nthread, KS)
     ! LOC
     mwSize, parameter :: One=1
     integer :: idx1(Ntrl), idx2(Ntrl), xi, ii, ti, ti1, ti2, N0, N1, i, Y1, Y2
-    real(c_double) :: cX1(Ntrl), cX2(Ntrl), cdf0(Ntrl,Ntrl), cdf1(Ntrl,Ntrl), N0inv, N1inv, ksdiff(4)
+    real(c_double) :: cX1(Ntrl), cX2(Ntrl), N0inv, N1inv, ksdiff(4)
+    real(c_double), allocatable  :: cdf0(:,:), cdf1(:,:)
     character(len=255) :: dbgmsg
 
     N0 = 0
@@ -88,10 +89,15 @@ subroutine calc_kstest_slice_omp(X, xd, Nx, Y, Ntrl, Nthread, KS)
     ! loop over X variables
     ! NB: OMP doesn't work with allocatable arrays
     ! NB: default(private) shared(...list...) didn't work
-    !$omp parallel do &
+    !$omp parallel &
     !$omp num_threads(Nthread) &
     !$omp default(shared) &
     !$omp private(xi,idx1,idx2,i,cX1,cX2,ti,cdf0,cdf1,ti1,ti2,Y1,Y2,ksdiff)
+    ! allocate storage for each thread
+    allocate(cdf0(Ntrl,Ntrl))
+    allocate(cdf1(Ntrl,Ntrl))
+
+    !$omp do
     do xi=1,Nx
       ! argsort each dimension
       idx1 = (/ (i, i=1,Ntrl) /)
@@ -259,6 +265,7 @@ subroutine calc_kstest_slice_omp(X, xd, Nx, Y, Ntrl, Nthread, KS)
 
       KS(xi) = maxval(ksdiff)
     end do
-    !$omp end parallel do
+    !$omp end do
+    !$omp end parallel 
 
 end subroutine
