@@ -18,4 +18,4 @@ else
     addpath('/home/robini/code/info/')
 end
 
-
+addpath('~/megexgen/')
