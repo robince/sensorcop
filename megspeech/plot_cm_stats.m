@@ -1,11 +1,22 @@
 % plot results from simulation
 
 % samp_size = [25 50 100 200 500];
-% Nsamp = length(samp_size);
-Ncorr = length(corrupt_prct);
 % stats = {'Icop' 'Ib2' 'Ib4' 'Ib8' 't' 'ks'};
+
+samp_size = sampsize;
+Nsamp = length(samp_size);
 Nstats = length(stats);
-thsNtrl = 100;
+
+%%
+Nrep = size(res,1);
+
+cm = [];
+for si=1:Nstats
+    stat = stats{si};
+    t = cellfun(@(x) x.(stat).cm, res, 'Uniform',false);
+    cm.(stat) = cell2mat(reshape(t,[1 1 Nrep Nsamp]));
+end
+
 
 %% SENSITIVITY
 figure
@@ -22,14 +33,14 @@ for si=1:Nstats
     
     sens = tp ./ (tp+fn);
     
-    plot(corrupt_prct, mean(sens,1));
+    plot(samp_size*10, mean(sens,1));
 %     semilogx(samp_size, mean(sens,1));
     hold all
 end
 legend(stats)
 title('Sensitivity')
-ylim([0 0.2])
-xlabel('noise trials (%)')
+ylim([0 0.5])
+xlabel('Recording (s)')
 
 %% PRECISION
 figure
@@ -47,11 +58,11 @@ for si=1:Nstats
 %     sens = tp ./ (tp+fn);
     precision = tp ./ (tp + fp);
     
-    plot(corrupt_prct, mean(precision,1));
+    plot(samp_size, nanmean(precision,1));
 end
 legend(stats)
 title('Precision')
-ylim([0.9 1])
+% ylim([0.9 1])
 
 %% SPECIFICITY
 figure
@@ -70,7 +81,7 @@ for si=1:Nstats
 %     precision = tp ./ (tp + fp);
     specificity = tn ./ (tn + fp);
     
-    plot(corrupt_prct, mean(specificity,1));
+    plot(samp_size, mean(specificity,1));
 end
 legend(stats)
 title('Specificity')
@@ -93,7 +104,7 @@ for si=1:Nstats
     denom = sqrt((tp+fp).*(tp+fn).*(tn+fp).*(tn+fn));
     mcc = (tp.*tn - fp.*fn) ./ denom;
     
-    plot(corrupt_prct, nanmean(mcc,1));
+    plot(samp_size, nanmean(mcc,1));
 %     semilogx(samp_size, nanmean(mcc,1));
     hold all
 end
@@ -122,7 +133,7 @@ for si=1:Nstats
         N = tp(ci) + fp(ci) + fn(ci) + tn(ci);
         Pj(1) = tp(ci);
         Pj(2) = fp(ci);
-        Pj(3) = fp(ci);
+        Pj(3) = tn(ci);
         Pj(4) = fn(ci);
         Pj = Pj ./ N;
         
@@ -140,44 +151,16 @@ for si=1:Nstats
         Ptest = Ptest ./ N;
         Htest = ent(Ptest);
         I(ci) = (Htrue + Htest - Hj);
-%         [i j] = ind2sub(size(tp),ci);
-        I(ci) = (Htrue + Htest - Hj) - 1./(2*thsNtrl*log(2));
+        [i j] = ind2sub(size(tp),ci);
+        j
+        I(ci) = (Htrue + Htest - Hj) - 1./(2*N*log(2));
         I(ci) = I(ci) ./ max(Htrue,Htest);
     end
     
 %     mean(I,1)
-    plot(corrupt_prct, mean(I,1));
+    plot(samp_size, mean(I,1));
 %     semilogx(samp_size, mean(I,1));
     hold all
 end
 legend(stats,'Location','SouthEast')
 title('MI')
-
-%% SENSITIVITY + SPECIFICITY
-figure
-ax = [];
-ax(1) = subplot(121);
-hold all
-ax(2) = subplot(122);
-hold all
-for si=1:Nstats  
-    st = cm.(stats{si});
-    % sensivity
-    tp = squeeze(st(1,1,:,:));
-    tn = squeeze(st(2,2,:,:));
-    % TODO: check
-    fp = squeeze(st(1,2,:,:));
-    fn = squeeze(st(2,1,:,:));
-    
-    sensitivity = tp ./ (tp+fn);
-    specificity = tn ./ (tn + fp);
-    
-    plot(ax(1), corrupt_prct, mean(sensitivity,1));
-    plot(ax(2), corrupt_prct, mean(specificity,1));
-end
-
-legend(ax(2),stats,'Location','SouthEast')
-title(ax(1),'Sensivity')
-ylim(ax(1),[0 1]);
-title(ax(2),'Specificity')
-ylim(ax(2),[0.98 1])

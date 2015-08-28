@@ -1,8 +1,9 @@
 % plot results from simulation
 
 samp_size = [25 50 100 200 500];
+% stats = {'Icop' 'Ib2' 'Ib4' 'Ib8' 't' 'ks'};
+
 Nsamp = length(samp_size);
-stats = {'Icop' 'Ib2' 'Ib4' 'Ib8' 't' 'ks'};
 Nstats = length(stats);
 
 %% SENSITIVITY
@@ -27,6 +28,7 @@ end
 legend(stats)
 title('Sensitivity')
 ylim([0 1])
+xlabel('Trials')
 
 %% PRECISION
 figure
@@ -119,7 +121,7 @@ for si=1:Nstats
         N = tp(ci) + fp(ci) + fn(ci) + tn(ci);
         Pj(1) = tp(ci);
         Pj(2) = fp(ci);
-        Pj(3) = fp(ci);
+        Pj(3) = tn(ci);
         Pj(4) = fn(ci);
         Pj = Pj ./ N;
         
@@ -137,8 +139,8 @@ for si=1:Nstats
         Ptest = Ptest ./ N;
         Htest = ent(Ptest);
         I(ci) = (Htrue + Htest - Hj);
-        [i j] = ind2sub(size(tp),ci);
-        I(ci) = (Htrue + Htest - Hj) - 1./(2*samp_size(j)*log(2));
+%         [i j] = ind2sub(size(tp),ci);
+        I(ci) = (Htrue + Htest - Hj) - 1./(2*N*log(2));
         I(ci) = I(ci) ./ max(Htrue,Htest);
     end
     

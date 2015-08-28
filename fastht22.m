@@ -14,8 +14,6 @@ mX2 = mean(X2,1);
 cX1 = bsxfun(@minus, X1, mX1);
 cX2 = bsxfun(@minus, X2, mX2);
 
-% cov with mtimesx
-
 % covX1 = mtimesx(cX1,'T',cX1,'N');
 % covX2 = mtimesx(cX2,'T',cX2,'N');
 
