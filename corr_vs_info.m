@@ -22,3 +22,6 @@ vline(-1,'k:')
 vline(1,'k:')
 axis square
 set(gca,'FontSize',16)
+set(gca,'TickLength',[0.02 0.025])
+set(gca,'TickDir','out')
+box off
