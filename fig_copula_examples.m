@@ -78,3 +78,206 @@ axis square
 %%
 scatterhist(norminv(cy),norminv(cx),'Kernel','on','Color','k','Marker','.')
 set(gca,'ticklength',2*get(gca,'ticklength'))
+
+
+%% Discrete example - RAW
+Npoint = 500;
+al = 0.1;
+y = randi(2,[Npoint 1]);
+sh = 3;
+x = (randn(Npoint,1)-(sh/2)) + sh*(y-1);
+% x = copnorm(x)
+Nscat = 500;
+xl = 5;
+
+lw = 2;
+al = 0.1;
+figure
+subplot(3,1,2)
+% [f fxi] = ksdensity(x);
+fxi = linspace(-xl,xl,100);
+% f = (normpdf(fxi)+normpdf(fxi-sh)+normpdf(fxi+sh))./3;
+f = (normpdf(fxi+(sh/2))+normpdf(fxi-(sh/2)))./2;
+full.f = f;
+full.fxi = fxi;
+% plot(fxi,normpdf(fxi),'k')
+plot(fxi,f,'k','LineWidth',lw)
+hold on
+hs = scatter(x(1:Nscat),0.3+(randn(Nscat,1)/100),'k','filled');
+alpha(hs,al)
+xlim([-xl xl])
+box off
+plot(fxi, normpdf(fxi, mean(x),std(x)),'k:')
+
+subplot(3,1,1)
+hold on
+cols = {'r' 'b'};
+offsets = [0.5 0.6];
+grp = [];
+for i=1:2
+    thsx = x(y==i);
+%     [f fxi] = ksdensity(thsx);
+    f = normpdf(fxi-sh*(i-1)+(sh/2));
+    grp(i).f = f;
+    grp(i).fxi = fxi;
+    plot(fxi, f, cols{i},'LineWidth',lw)
+    thsNpt = min(Nscat,length(thsx));
+    hs = scatter(thsx(1:thsNpt), offsets(i)+(randn(thsNpt,1)/100),cols{i},'filled');
+    alpha(hs,al)
+end
+xlim([-xl xl])
+
+subplot(3,1,3)
+hold on
+plot(full.fxi,full.f,'k','LineWidth',lw);
+fxi = linspace(-5,5,100);
+% grpf = zeros(100,2);
+% for i=1:2
+%     thsx = x(y==i);
+%     [f ~] = ksdensity(thsx-mean(thsx),fxi);
+% %     f = normpdf(fxi);
+%     plot(fxi,f,cols{i})
+%     grpf(:,i) = f;
+% end
+% plot(fxi,mean(grpf,2),'--k','LineWidth',2)
+
+xlim([-xl xl])
+plot(fxi,normpdf(fxi),'--k','LineWidth',2)
+plot(fxi, normpdf(fxi, mean(x),std(x)),'k:')
+
+%% Discrete example - COPULA
+Npoint = 500;
+% y = randi(2,[Npoint 1]);
+sh = 3;
+% x = (randn(Npoint,1)-(sh/2)) + sh*(y-1);
+x = copnorm(x);
+Nscat = 500;
+xl = 3.5;
+
+lw = 2;
+al = 0.1;
+figure
+subplot(3,1,2)
+% [f fxi] = ksdensity(x);
+fxi = linspace(-xl,xl,100);
+% f = (normpdf(fxi)+normpdf(fxi-sh)+normpdf(fxi+sh))./3;
+% f = (normpdf(fxi+(sh/2))+normpdf(fxi-(sh/2)))./2;
+f = normpdf(fxi);
+full.f = f;
+full.fxi = fxi;
+% plot(fxi,normpdf(fxi),'k')
+plot(fxi,f,'k','LineWidth',lw)
+hold on
+hs = scatter(x(1:Nscat),0.5+(randn(Nscat,1)/75),'k','filled');
+alpha(hs,al)
+xlim([-xl xl])
+box off
+plot(fxi, normpdf(fxi, mean(x),std(x)),'k:')
+
+subplot(3,1,1)
+hold on
+cols = {'r' 'b'};
+offsets = [0.8 0.9];
+grp = [];
+for i=1:2
+    thsx = x(y==i);
+    [f ~] = ksdensity(thsx,fxi);
+%     f = normpdf(fxi-sh*(i-1)+(sh/2));
+    grp(i).f = f;
+    grp(i).fxi = fxi;
+    plot(fxi, f, cols{i},'LineWidth',lw)
+    thsNpt = min(Nscat,length(thsx));
+    hs = scatter(thsx(1:thsNpt), offsets(i)+(randn(thsNpt,1)/100),cols{i},'filled');
+    alpha(hs,al)
+end
+xlim([-xl xl])
+
+subplot(3,1,3)
+hold on
+plot(full.fxi,full.f,'k','LineWidth',lw);
+fxi = linspace(-5,5,100);
+grpf = zeros(100,2);
+for i=1:2
+    thsx = x(y==i);
+    [f ~] = ksdensity(thsx-mean(thsx),fxi);
+%     f = normpdf(fxi);
+    plot(fxi,f,cols{i})
+    grpf(:,i) = f;
+end
+% plot(fxi,mean(grpf,2),'--k','LineWidth',2)
+
+xlim([-xl xl])
+% plot(fxi,normpdf(fxi),'--k','LineWidth',2)
+% plot(fxi, normpdf(fxi, mean(x),std(x)),'k:')
+    
+%% Discrete example - no effect
+Npoint = 500;
+y = randi(2,[Npoint 1]);
+sh = 3;
+% x = (randn(Npoint,1)-(sh/2)) + sh*(y-1);
+x = randn(Npoint,1);
+% x = copnorm(x)
+Nscat = 500;
+xl = 5;
+
+lw = 2;
+al = 0.2;
+figure
+subplot(3,1,2)
+% [f fxi] = ksdensity(x);
+fxi = linspace(-xl,xl,100);
+% f = (normpdf(fxi)+normpdf(fxi-sh)+normpdf(fxi+sh))./3;
+% f = (normpdf(fxi+(sh/2))+normpdf(fxi-(sh/2)))./2;
+f = normpdf(fxi);
+full.f = f;
+full.fxi = fxi;
+% plot(fxi,normpdf(fxi),'k')
+plot(fxi,f,'k','LineWidth',lw)
+hold on
+hs = scatter(x(1:Nscat),0.3+(randn(Nscat,1)/100),'k','filled');
+alpha(hs,al)
+xlim([-xl xl])
+box off
+plot(fxi, normpdf(fxi, mean(x),std(x)),'k:')
+
+subplot(3,1,1)
+hold on
+cols = {'r' 'b'};
+offsets = [0.5 0.6];
+grp = [];
+for i=1:2
+    thsx = x(y==i);
+%     [f fxi] = ksdensity(thsx);
+%     f = normpdf(fxi-sh*(i-1)+(sh/2));
+    f = normpdf(fxi);
+    grp(i).f = f;
+    grp(i).fxi = fxi;
+    plot(fxi, f, cols{i},'LineWidth',lw)
+    thsNpt = min(Nscat,length(thsx));
+    hs = scatter(thsx(1:thsNpt), offsets(i)+(randn(thsNpt,1)/100),cols{i},'filled');
+    alpha(hs,al)
+end
+xlim([-xl xl])
+
+subplot(3,1,3)
+hold on
+plot(full.fxi,full.f,'k','LineWidth',lw);
+fxi = linspace(-5,5,100);
+% grpf = zeros(100,2);
+% for i=1:2
+%     thsx = x(y==i);
+%     [f ~] = ksdensity(thsx-mean(thsx),fxi);
+% %     f = normpdf(fxi);
+%     plot(fxi,f,cols{i})
+%     grpf(:,i) = f;
+% end
+% plot(fxi,mean(grpf,2),'--k','LineWidth',2)
+
+xlim([-xl xl])
+plot(fxi,normpdf(fxi),'--k','LineWidth',2)
+plot(fxi, normpdf(fxi, mean(x),std(x)),'k:')
+    
+% set(get(gcf,'Children'),'ticklength',2*get(gca,'ticklength'))
+
+
+
