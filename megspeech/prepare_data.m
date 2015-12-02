@@ -78,3 +78,17 @@ fltspc = resample(fltspc, 1, 5);
 
 %%
 savefast sub2_dat plndat fltspc
+
+%% convert channels to eeglab
+chanlocs = [];
+Nch = length(flt_data.label);
+for ci=1:Nch
+    thslab = flt_data.label{ci};
+    chidx = find(strcmp(thslab,flt_data.grad.label));
+    chanlocs(ci).labels = thslab;
+    chanlocs(ci).X = flt_data.grad.chanpos(chidx,1);
+    chanlocs(ci).Y = flt_data.grad.chanpos(chidx,2);
+    chanlocs(ci).Z = flt_data.grad.chanpos(chidx,3); 
+end
+
+chanlocs = convertlocs(chanlocs,'cart2all');
