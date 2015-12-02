@@ -1,7 +1,7 @@
 % plot results from simulation
 
 samp_size = [25 50 100 200 500];
-% stats = {'Icop' 'Ib2' 'Ib4' 'Ib8' 't' 'ks'};
+stats = {'Icop' 'Ib2' 'Ib4' 'Ib8' 't' 'ks'};
 
 Nsamp = length(samp_size);
 Nstats = length(stats);

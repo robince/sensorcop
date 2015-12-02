@@ -4,6 +4,7 @@
 % Nsamp = length(samp_size);
 Ncorr = length(corrupt_prct);
 % stats = {'Icop' 'Ib2' 'Ib4' 'Ib8' 't' 'ks'};
+stats = {'Icop' 'Ib2' 'Ib4' 'Ib8' 't'};
 Nstats = length(stats);
 thsNtrl = 100;
 
