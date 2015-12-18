@@ -86,6 +86,8 @@ end
 legend(stats)
 title('Specificity')
 % ylim([0.9 1])
+ylim([0.95 1.05])
+box on
 
 
 %% MATTHEWS
