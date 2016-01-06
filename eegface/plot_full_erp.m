@@ -2,8 +2,10 @@ load(fullfile(data_dir,'eeg_face_ks_ground'))
 
 Ntrlplt = 100;
 % idx = randperm(Ntrl, Ntrlplt);
-load(pltidx100)
+load('pltidx100')
+
 %% stat calcs
+Nperm = 200;
 thseeg = rspdat(idx,:,:);
 thsstim = stim(idx);
 qstm = int16(thsstim);
@@ -20,7 +22,6 @@ for pi=1:Nperm
     Icopperm(:,:,pi) = reshape(info_c1d_slice_nobc_omp(crsp, qstm+1, 2, Ntrlplt, Nthread),[Nt Nchan]);
     ttperm(:,:,pi) = abs(reshape(fastt2(thseeg, pstim),[Nt Nchan]));
 end
-
 
 %%
 figure
@@ -69,6 +70,7 @@ imagesc(time,[],1-repmat((Icop>thresh)',[1 1 3]),'AlphaData',0.8)
 cbax = colorbar;
 set(cbax,'Visible','off')
 title('permutation significance')
+Icop100sig = Icop>thresh;
 
 t = 140;
 [~,tidx] = min(abs(time-t));
@@ -97,6 +99,7 @@ thresh = prctile(squeeze(max(max(ttperm,[],1),[],2)),99);
 imagesc(time,[],gtdat);
 hold on
 imagesc(time,[],1-repmat((tt>thresh)',[1 1 3]),'AlphaData',0.8)
+tt100sig = tt>thresh;
 cbax = colorbar;
 set(cbax,'Visible','off')
 title('permutation significance')
@@ -114,3 +117,19 @@ topoplot(tt(tidx,:),dat.chanlocs, 'maplimits', cl);
 title('200ms')
 
 colormap parula
+
+%% source data
+
+sd = [];
+sd.time = time;
+sd.chanlocs = dat.chanlocs;
+
+sd.ks1000 = ks;
+sd.gtsig = gt;
+
+sd.Icop100 = Icop;
+sd.Icop100sig = Icop100sig;
+
+sd.tt100 = tt;
+sd.tt100sig = tt100sig;
+

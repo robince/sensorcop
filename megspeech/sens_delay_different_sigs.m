@@ -150,3 +150,18 @@ topoplot(Iphs(:,di)',chanlocs,'maplimits',cl);
 title(sprintf('%d ms', 1000*delays(di)/Fs));
 
 colormap parula
+
+%% source data
+
+sd = [];
+sd.chanlocs = chanlocs;
+sd.delays = (delays/Fs)*1000;
+
+sd.Icop2d = Ifull;
+sd.Icop2dsig = Ifull>thrIfull;
+
+sd.Icopamp = Isum;
+sd.Icopampsig = Isum>thrIsum;
+
+sd.Icopdir = Iphs;
+sd.Icopdirsig = Iphs>thrIphs;
