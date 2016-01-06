@@ -5,9 +5,9 @@ RAA Ince, BL Giordano, C Kayser, GA Rousselet, J Gross and PG Schyns
 "A statistical framework based on a novel mutual information estimator utilizing a Gaussian copula"
 
 
-This is the full history of the active research code. It is unlikely to run unaltered on a fresh machine without changing data and toolbox paths as required. There are also several mex functions which need compilation.
+This is the full history of the active research code. It is unlikely to run unaltered on a fresh machine without changing data and toolbox paths as required. There are also several mex functions which need compilation (see [`make.m`](make.m)).
 
-The data used are available in the Dryad submission:
+The raw data and plotted figure data are available in the Dryad data package:
 
 RAA Ince, BL Giordano, C Kayser, GA Rousselet, J Gross and PG Schyns  
 "Data from: A statistical framework based on a novel mutual information estimator utilizing a Gaussian copula"
@@ -26,7 +26,7 @@ The particular scripts used for each figure are:
 - **Figure 2** : [`info_scatters.py`](info_scatters.py)
 - **Figure 3** : [`corr_vs_info.m`](corr_vs_info.m)
 - **Figure 4A** : [`eegface/fig_event_related_design.m`](eegface/fig_event_related_design.m)
-- **Figure 4(B,D)** : [`megspeech/fig_conf_design.m`](megspeech/fig_conf_design.m)
+- **Figure 4(B,D)** : [`megspeech/fig_cont_design.m`](megspeech/fig_cont_design.m)
 - **Figure 5** : [`fig_cmi_example.m`](fig_cmi_example.m)
 - **Figure (8,9)** : [`fig_copula_examples.m`](fig_copula_examples.m)
 - **Figure 10** : [`fig_spectral_example_separate.m`](fig_spectral_example_separate.m)
