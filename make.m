@@ -7,11 +7,20 @@
 PROCESS_TEMPLATES = false;
 % mex options
 DEBUG = false;
-VERBOSE = false;
+VERBOSE = true;
 LARGEARRAY = true;
 
 % path to matlab api
-MATLABAPI_DIR = '/Users/robince/git/MatlabAPI_lite';
+% MATLABAPI_DIR = '/Users/robince/git/MatlabAPI_lite';
+% MATLABAPI_DIR = '/home/robini/code/MatlabAPI_lite_grid';
+% MATLABAPI_DIR = '/home/robini/code/MatlabAPI_lite';
+% MATLABAPI_DIR = '/home/robini/code/MatlabAPI_lite_gfortran44';
+% MATLABAPI_DIR = '/home/robini/code/MatlabAPI_lite_gfortran';
+MATLABAPI_DIR = '/home/robini/code/MatlabAPI_lite_ifort15';
+
+% needed for some compilers (eg intel)
+EXTRA_LIBS = '';
+% EXTRA_LIBS = '/opt/intel/composerxe/lib/intel64/libifcoremt_pic.a';
 
 % Matlab doesn't use the normal system path so need the full path to
 % executables
@@ -75,8 +84,6 @@ MEXARGS{end+1} = '-c';
 MEXARGS{end+1} = 'lib_array.f';
 mex(MEXARGS{:})
 
-
-
 %%
 MEXARGS = ARGS;
 MEXARGS{end+1} = 'rocarea.f';
@@ -85,6 +92,9 @@ MEXARGS{end+1} = fullfile(MATLABAPI_DIR,['MatlabAPImex.' OBJEXT]);
 MEXARGS{end+1} = ['lib_array.' OBJEXT];
 MEXARGS{end+1} = '-lmwblas';
 MEXARGS{end+1} = '-lmwlapack';
+if ~isempty(EXTRA_LIBS)
+    MEXARGS{end+1} = EXTRA_LIBS;
+end
 mex(MEXARGS{:})
 
 %%
@@ -95,4 +105,20 @@ MEXARGS{end+1} = fullfile(MATLABAPI_DIR,['MatlabAPImex.' OBJEXT]);
 MEXARGS{end+1} = ['lib_array.' OBJEXT];
 MEXARGS{end+1} = '-lmwblas';
 MEXARGS{end+1} = '-lmwlapack';
+if ~isempty(EXTRA_LIBS)
+    MEXARGS{end+1} = EXTRA_LIBS;
+end
+mex(MEXARGS{:})
+
+%%
+MEXARGS = ARGS;
+MEXARGS{end+1} = 'kstest2d_slice_omp.f';
+MEXARGS{end+1} = fullfile(MATLABAPI_DIR,['MatlabAPImx.' OBJEXT]);
+MEXARGS{end+1} = fullfile(MATLABAPI_DIR,['MatlabAPImex.' OBJEXT]);
+MEXARGS{end+1} = ['lib_array.' OBJEXT];
+MEXARGS{end+1} = '-lmwblas';
+MEXARGS{end+1} = '-lmwlapack';
+if ~isempty(EXTRA_LIBS)
+    MEXARGS{end+1} = EXTRA_LIBS;
+end
 mex(MEXARGS{:})
