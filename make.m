@@ -17,6 +17,7 @@ LARGEARRAY = true;
 % MATLABAPI_DIR = '/home/robini/code/MatlabAPI_lite_gfortran44';
 % MATLABAPI_DIR = '/home/robini/code/MatlabAPI_lite_gfortran';
 MATLABAPI_DIR = '/home/robini/code/MatlabAPI_lite_ifort15';
+% MATLABAPI_DIR = '/Users/robince/git/MatlabAPI_lite_gfortran';
 
 % needed for some compilers (eg intel)
 EXTRA_LIBS = '';
@@ -121,4 +122,14 @@ MEXARGS{end+1} = '-lmwlapack';
 if ~isempty(EXTRA_LIBS)
     MEXARGS{end+1} = EXTRA_LIBS;
 end
+mex(MEXARGS{:})
+
+%%
+MEXARGS = ARGS;
+MEXARGS{end+1} = 'kstest2d_slice_omp.f';
+MEXARGS{end+1} = fullfile(MATLABAPI_DIR,['MatlabAPImx.' OBJEXT]);
+MEXARGS{end+1} = fullfile(MATLABAPI_DIR,['MatlabAPImex.' OBJEXT]);
+MEXARGS{end+1} = ['lib_array.' OBJEXT];
+MEXARGS{end+1} = '-lmwblas';
+MEXARGS{end+1} = '-lmwlapack';
 mex(MEXARGS{:})
