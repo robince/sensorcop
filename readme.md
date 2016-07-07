@@ -2,12 +2,12 @@
 This repository contains the code for the analysis and simulations in:
 
 RAA Ince, BL Giordano, C Kayser, GA Rousselet, J Gross and PG Schyns  
-"A statistical framework based on a novel mutual information estimator utilizing a Gaussian copula"
-
+"A statistical framework for neuroimaging data analysis based on mutual information estimated via a Gaussian copula"  
+[bioRxiv:](http://biorxiv.org/content/early/2016/03/16/043745) [doi:10.1101/043745](http://dx.doi.org/10.1101/043745)
 
 This is the full history of the active research code. It is unlikely to run unaltered on a fresh machine without changing data and toolbox paths as required. There are also several mex functions which need compilation (see [`make.m`](make.m)).
 
-The raw data and plotted figure data are available in the Dryad data package:
+The raw data and plotted figure data will be available in the Dryad data package:
 
 RAA Ince, BL Giordano, C Kayser, GA Rousselet, J Gross and PG Schyns  
 "Data from: A statistical framework based on a novel mutual information estimator utilizing a Gaussian copula"
