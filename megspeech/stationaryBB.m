@@ -1,4 +1,4 @@
-function Zb = stationaryBB(Z,sim,L)
+function Zb = stationaryBB(Z,nboot,sim,L)
 % PURPOSE: Stationary Block Bootstrap for a vector time series
 % ------------------------------------------------------------
 % SYNTAX: Zb = stationaryBB(Z,sim,L);
@@ -37,14 +37,15 @@ function Zb = stationaryBB(Z,sim,L)
 % Version 2.1 [October 2015]
 
 % Dimension of time series to be bootstrapped
+% n specified by user
 [n,kz] = size(Z);
 
 % ------------------------------------------------------------
 %  ALLOCATION
 % ------------------------------------------------------------
-I = zeros(1,n);
-b = zeros(1,n);
-xb = -999.99*ones(n,1);
+I = zeros(1,nboot);
+b = zeros(1,nboot);
+xb = -999.99*ones(nboot,1);
 
 % ------------------------------------------------------------
 % WRAPPING THE TIME SERIES AROUND THE CIRCLE
@@ -54,18 +55,18 @@ Z = [Z; Z(1:n-1,:)];
 % ------------------------------------------------------------
 % INDEX SELECTION
 % ------------------------------------------------------------
-I = round(1+(n-1)*rand(1,n));
+I = round(1+(n-1)*rand(1,nboot));
 
 % ------------------------------------------------------------
 % BLOCK SELECTION
 % ------------------------------------------------------------
 switch sim
 case 1 % Stationary BB, geometric pdf
-   b = geornd(1/L(1),1,n);
+   b = geornd(1/L(1),1,nboot)
 case 2 % Stationary BB, uniform pdf   
-   b = round(L(1)+(L(2)-1)*rand(1,n));
+   b = round(L(1)+(L(2)-1)*rand(1,nboot));
 case 3 % Circular bootstrap (fixed block size)
-   b = L(1) * ones(1,n);
+   b = L(1) * ones(1,nboot);
 end
 
 % ------------------------------------------------------------
@@ -73,7 +74,7 @@ end
 % ------------------------------------------------------------
 Zb = [];
 for j=1:kz
-   Zb = [Zb loopBB(Z(:,j),n,b,I)];
+   Zb = [Zb loopBB(Z(:,j),nboot,b,I)];
 end
 
 % ============================================================
