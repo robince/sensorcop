@@ -123,6 +123,7 @@ legend(est)
 % legend(est)
 
 %%
+load('2dbias_boot500.mat');
 sidx = 1:Nsamp;
 x = log_samp_size(sidx);
 
@@ -134,7 +135,7 @@ errorbar(x-0.1, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 hold all
 
 pd = squeeze(Ib2mm(:,sidx));
-errorbar(x-0.05, median(pd), median(pd)-prctile(pd,25),prctile(pd,75)-median(pd));
+errorbar(x-0.05, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 
 pd = squeeze(Ib4mm(:,sidx));
 errorbar(x+0.05, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
@@ -147,5 +148,5 @@ xlim([3.5 10.5])
 
 legend('GCMI','2 bin','4 bin','kNN')
 ylabel('MI (bits)')
-xlabel('log_2 samples')t
+xlabel('log_2 samples')
 % subplot(2,1,2)

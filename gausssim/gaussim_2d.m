@@ -93,7 +93,7 @@ errorbar(x-0.1, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 hold all
 % 
 pd =bsxfun(@minus,squeeze(Ib2(:,ci,sidx)),3*binbias(sidx));
-errorbar(x-0.05, median(pd), median(pd)-prctile(pd,25),prctile(pd,75)-median(pd));
+errorbar(x-0.05, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 
 pd = bsxfun(@minus,squeeze(Ib4(:,ci,sidx)),45*binbias(sidx));
 errorbar(x+0.05, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
