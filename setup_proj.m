@@ -5,6 +5,7 @@ if strcmp(name(1:10), 'robini2-pc')
     addpath('/home/robini/code/gauss_info/')
     addpath('/home/robini/code/gauss_info/mex/')
     addpath('/home/robini/code/info/')
+    addpath('/home/robini/git/sensorcop/gausssim/')
 elseif strcmp(mexext,'mexmaci64')
     data_dir = '~/Documents/gladata/sensorcop';
     addpath('~/Documents/glacode/para_info/')
@@ -18,4 +19,5 @@ else
     addpath('/home/robini/code/info/')
 end
 
-addpath('~/megexgen/')
+addpath('~/code/gcmi/matlab/')
+% addpath('~/megexgen/')
