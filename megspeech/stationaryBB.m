@@ -62,7 +62,7 @@ I = round(1+(n-1)*rand(1,nboot));
 % ------------------------------------------------------------
 switch sim
 case 1 % Stationary BB, geometric pdf
-   b = geornd(1/L(1),1,nboot)
+   b = geornd(1/L(1),1,nboot);
 case 2 % Stationary BB, uniform pdf   
    b = round(L(1)+(L(2)-1)*rand(1,nboot));
 case 3 % Circular bootstrap (fixed block size)
