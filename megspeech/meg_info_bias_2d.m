@@ -93,7 +93,12 @@ end
 %%
 
 save('megbias_boot500.mat','Ik','Icop','Ib2','Ib2mm','Ib4','Ib4mm','k','Nsamp','log_samp_size','chi','delay','Nrep')
+
 %%
+load('megbias_jack500.mat')
+
+%%
+
 sidx = 1:Nsamp;
 x = log_samp_size(sidx);
 
@@ -105,18 +110,18 @@ errorbar(x-0.1, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 hold all
 
 pd = squeeze(Ib2mm(:,sidx));
-errorbar(x-0.05, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
+errorbar(x-0.033, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 
 pd = squeeze(Ib4mm(:,sidx));
-errorbar(x+0.05, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
+errorbar(x+0.033, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 
 pd = squeeze(Ik(:,sidx));
 errorbar(x+0.1, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 
-% xlim([3.5 10.5])
+xlim([7.5 15])
 % ylim([-0.15 1])
 
-legend('GCMI','2 bin','4 bin','kNN')
+% legend('GCMI','2 bin','4 bin','kNN')
 ylabel('MI (bits)')
 xlabel('log_2 samples')
 % subplot(2,1,2)
