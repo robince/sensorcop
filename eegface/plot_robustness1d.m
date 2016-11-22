@@ -3,8 +3,8 @@
 % samp_size = [25 50 100 200 500];
 % Nsamp = length(samp_size);
 Ncorr = length(corrupt_prct);
-% stats = {'Icop' 'Ib2' 'Ib4' 'Ib8' 't' 'ks'};
-stats = {'Icop' 'Ib2' 'Ib4' 'Ib8' 't'};
+stats = {'Icop' 'Ib2' 'Ib4' 'Ib8' 't' 'ks'};
+% stats = {'Icop' 'Ib2' 'Ib4' 'Ib8' 't'};
 Nstats = length(stats);
 thsNtrl = 100;
 
@@ -36,7 +36,7 @@ xlabel('noise trials (%)')
 figure
 hold all
 
-for si=1:Nstats  
+for si=1:Nstats
     st = cm.(stats{si});
     % sensivity
     tp = squeeze(st(1,1,:,:));

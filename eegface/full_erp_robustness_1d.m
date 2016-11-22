@@ -45,8 +45,8 @@ Nperm = 200;
 
 Nthread = 32;
 % Nthread = 8;
-% stats = {'Ib2' 'Ib4' 'Ib8' 'Icop' 't' 'ks'};
-stats = {'Ib2' 'Ib4' 'Ib8' 'Icop' 't'};
+stats = {'Ib2' 'Ib4' 'Ib8' 'Icop' 't' 'ks'};
+% stats = {'Ib2' 'Ib4' 'Ib8' 'Icop' 't'};
 
 Nstat = length(stats);
 % cm = [];
@@ -86,7 +86,7 @@ for si=1:Ncorr
         
         fres.t = abs(reshape(fastt2(thseeg, thsstim),[Nt Nchan]));
         
-%         fres.ks = reshape(kstest_slice_omp(thseeg(:,:), qstm, thsNtrl, Nthread), [Nt Nchan]);
+        fres.ks = reshape(kstest_slice_omp(thseeg(:,:), qstm, thsNtrl, Nthread), [Nt Nchan]);
 
         
         % permutations
@@ -104,7 +104,7 @@ for si=1:Ncorr
             fres.Ib8perm(:,:,pi) = reshape(info.calc_info_slice_omp_integer_c_int16_t(qrsp8, 8, qstm, 2, thsNtrl, Nthread), [Nt Nchan]);
             fres.Icopperm(:,:,pi) = reshape(info_c1d_slice_nobc_omp(crsp, qstm+1, 2, thsNtrl, Nthread),[Nt Nchan]);
             fres.tperm(:,:,pi) = abs(reshape(fastt2(thseeg, pstim),[Nt Nchan]));
-%             fres.ksperm(:,:,pi) = reshape(kstest_slice_omp(thseeg(:,:), qstm, thsNtrl, Nthread), [Nt Nchan]);
+            fres.ksperm(:,:,pi) = reshape(kstest_slice_omp(thseeg(:,:), qstm, thsNtrl, Nthread), [Nt Nchan]);
         end
 
         for ii=1:Nstat
@@ -128,5 +128,5 @@ end
 
 %%
 
-save cm_1d_robust1.mat cm stats corrupt_prct
+save cm_1d_robust1_withks.mat cm stats corrupt_prct
 
