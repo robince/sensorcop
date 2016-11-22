@@ -49,5 +49,9 @@ The particular scripts used for each figure are:
     + Plot results: [`eegeye/fig_parainfo_int_gradient.m`](eegeye/fig_parainfo_int_gradient.m)
 - **Figure 13F** : [`eegeye/info_accum.m`](eegeye/info_accum.m)
 - **Figure 13G** : [`megspeech/plot_example_chan.m`](megspeech/plot_example_chan.m)
+- **Figure 14A** : [`gausssim/gausssim_1d.m`](gausssim/gausssim_1d.m)
+- **Figure 14B** : [`gausssim/gausssim_2d.m`](gausssim/gausssim_2d.m)
+- **Figure 14C** : [`eegface/info_bias_2d_jack.m`](eegface/info_bias_2d_jack.m)
+- **Figure 14D** : [`megspeech/meg_info_bias_2d_jack.m`](megspeech/meg_info_bias_2d_jack.m)
 
 Questions / comments : robince@gmail.com
