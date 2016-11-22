@@ -93,10 +93,10 @@ errorbar(x-0.1, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 hold all
 % 
 pd =bsxfun(@minus,squeeze(Ib2(:,ci,sidx)),3*binbias(sidx));
-errorbar(x-0.05, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
+errorbar(x-0.033, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 
 pd = bsxfun(@minus,squeeze(Ib4(:,ci,sidx)),45*binbias(sidx));
-errorbar(x+0.05, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
+errorbar(x+0.033, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 
 % 
 pd = squeeze(Ik1(:,ci,sidx,1));
@@ -132,12 +132,12 @@ hold all
 pd =bsxfun(@minus,squeeze(Ib2(:,ci,sidx)),binbias(sidx));
 pd = (pd - Itrue(ci)).^2;
 sem = std(pd) ./ sqrt(size(pd,1));
-errorbar(x-0.05, mean(pd), sem./2);
+errorbar(x-0.033, mean(pd), sem./2);
 
 % pd = bsxfun(@minus,squeeze(Ib4(:,ci,sidx)),9*binbias(sidx));
 % pd = (pd - Itrue(ci)).^2;
 % sem = std(pd) ./ sqrt(size(pd,1));
-% errorbar(x+0.05, mean(pd), sem./2);
+% errorbar(x+0.033, mean(pd), sem./2);
 plot(0,0)
 %
 pd = squeeze(Ik1(:,ci,sidx));
@@ -153,3 +153,4 @@ end
 subplot(2,3,2)
 ylabel('MSE')
 
+set(gcf,'Pos',[ 339   529   753   479])

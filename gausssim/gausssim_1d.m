@@ -1,4 +1,4 @@
-% Gaussian simulation to look at MI value bias / MSE
+    % Gaussian simulation to look at MI value bias / MSE
 % univariate gauss
 
 cor = [0.2 0.4 0.6 0.8];
@@ -99,10 +99,10 @@ errorbar(x-0.1, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 hold all
 % 
 pd =bsxfun(@minus,squeeze(Ib2(:,ci,sidx)),binbias(sidx));
-errorbar(x-0.05, median(pd), median(pd)-prctile(pd,25),prctile(pd,75)-median(pd));
+errorbar(x-0.033, median(pd), median(pd)-prctile(pd,25),prctile(pd,75)-median(pd));
 
 pd = bsxfun(@minus,squeeze(Ib4(:,ci,sidx)),9*binbias(sidx));
-errorbar(x+0.05, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
+errorbar(x+0.033, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
 
 % pd = bsxfun(@minus,squeeze(Ib8(:,ci,sidx)),49*binbias(sidx));
 % errorbar(x, mean(pd), mean(pd)-prctile(pd,25),prctile(pd,75)-mean(pd));
@@ -142,12 +142,12 @@ hold all
 pd =bsxfun(@minus,squeeze(Ib2(:,ci,sidx)),binbias(sidx));
 pd = (pd - Itrue(ci)).^2;
 sem = std(pd) ./ sqrt(size(pd,1));
-errorbar(x-0.05, mean(pd), sem./2);
+errorbar(x-0.033, mean(pd), sem./2);
 
 pd = bsxfun(@minus,squeeze(Ib4(:,ci,sidx)),9*binbias(sidx));
 pd = (pd - Itrue(ci)).^2;
 sem = std(pd) ./ sqrt(size(pd,1));
-errorbar(x+0.05, mean(pd), sem./2);
+errorbar(x+0.033, mean(pd), sem./2);
 %
 pd = squeeze(Ik1(:,ci,sidx,2));
 pd = (pd - Itrue(ci)).^2;
@@ -161,8 +161,15 @@ xlabel('log_2 samples')
 end
 subplot(2,4,1)
 ylabel('MSE')
-
-
+axs = get(gcf,'Children');
+tl = get(axs(1),'ticklength');
+for axi=1:length(axs)
+    try
+        set(axs(axi),'ticklength',2*tl)
+    catch
+    end
+end
+set(gcf,'Pos',[341         529        1016         479])
 %% MEAN / IQR EFFECT OF K
 sidx = 2:Nsamp;
 x = log_samp_size(sidx);
